@@ -84,18 +84,17 @@ public class HomeTest extends AbstractTest {
 //  https://www.vseinstrumenti.ru/
 //  Добавление в корзину и проверка цены
   public void testCart() throws InterruptedException {
-    page.navigate("https://www.vseinstrumenti.ru/");
     Thread.sleep(5000);
     List<WebElement> itemsList = driver.findElements(By.xpath("//div[@data-algorithm='popular']//li[contains(@class, 'retailrocket-item')][@aria-hidden='false']"));
     int countRegions = itemsList.size();
     Random random = new Random();
     int randomItem = random.nextInt(countRegions);
     WebElement item = itemsList.get(randomItem);
-    //get price
-    String itemPrice = item.findElement(By.cssSelector(".retailrocket-item-price-value")).getText();
     //add to cart
     item.findElement(By.cssSelector(".retailrocket-actions-buy")).click();
     Thread.sleep(2000);
+    //get price
+    String itemPrice = driver.findElement(By.cssSelector(".-cart-notify-window .cart-sum")).getText();
     driver.findElement(By.cssSelector(".go-to-cart")).click();
     Thread.sleep(2000);
     String totalPrice = driver.findElement(By.cssSelector("aside.cart-total strong[data-behaviour='total-price']")).getText();
